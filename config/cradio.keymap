@@ -12,8 +12,9 @@
 #define DEFAULT 0
 #define NAV     1
 #define ETC     2
-#define NUM	3
-#define SYS	4
+#define NUM     3
+#define SYS     4
+#define MOUSE   5
 
 &mt {
     flavor = "tap-preferred";
@@ -21,25 +22,20 @@
 };
 
 / { 
-
-/*
-*    combos {
-*        compatible = "zmk,combos";
-*        combo_esc {
-*            timeout-ms = <50>;
-*            key-positions = <0 1>;
-*            bindings = <&kp ESC>;
-*        };
-*        
-*         combo_tab {
-*            timeout-ms = <50>;
-*            key-positions = <10 11>;
-*            bindings = <&kp TAB>;
-*        };
-*       
-*
-*   };
-*/
+    combos {
+         compatible = "zmk,combos";
+         combo_esc {
+             timeout-ms = <50>;
+             key-positions = <0 1>;
+             bindings = <&to MOUSE>;
+         };
+        
+         combo_tab {
+             timeout-ms = <50>;
+             key-positions = <10 11>;
+             bindings = <&kp TAB>;
+         };
+    };
 	
 	behaviors {
         td_qesc: tap_dance_q_esc {
@@ -123,6 +119,14 @@
 					 &trans   &to DEFAULT  			&kp BSPC &to ETC
 		>;
 		};		
-	
+
+		mouse_layer {
+		bindings = <
+		&trans  &trans &kp BSPC  &kp DEL    &trans	&trans &trans   &trans   &trans  &trans
+		&trans &trans &mkp LCLK &mkp RCLK &trans  				&trans &trans   &trans   &trans  &trans
+	        &trans &mmv MOVE_UP &mmv MOVE_LEFT &mmv MOVE_RIGHT &mmv MOVE_DOWN      &trans &trans   &trans   &trans  &trans   
+					 &trans   &to DEFAULT  			&kp BSPC &to ETC
+		>;
+		};
 	};
 };
