@@ -1,0 +1,128 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/mouse.h>
+
+#define DEFAULT 0
+#define NAV     1
+#define ETC     2
+#define NUM	3
+#define SYS	4
+
+&mt {
+    flavor = "tap-preferred";
+    tapping_term_ms = <200>;
+};
+
+/ { 
+
+/*
+*    combos {
+*        compatible = "zmk,combos";
+*        combo_esc {
+*            timeout-ms = <50>;
+*            key-positions = <0 1>;
+*            bindings = <&kp ESC>;
+*        };
+*        
+*         combo_tab {
+*            timeout-ms = <50>;
+*            key-positions = <10 11>;
+*            bindings = <&kp TAB>;
+*        };
+*       
+*
+*   };
+*/
+	
+	behaviors {
+        td_qesc: tap_dance_q_esc {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_Q_ESC";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp Q>, <&kp ESC>;
+        };
+	
+	td_ysemi: tap_dance_y_semi {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_Y_SEMI";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp Y>, <&kp SEMI>;
+        };
+	
+	td_io: tap_dance_i_o {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_I_O";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp I>, <&kp O>;
+        };
+	
+	td_sftcaps: tap_dance_shift_capsword {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_SHIFT_CAPSWORD";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&sk LSHIFT>, <&caps_word>;
+        };
+     };
+	
+	
+        keymap {
+                compatible = "zmk,keymap";
+                
+       		default_layer {
+		bindings = <
+		&td_qesc      &kp W      &kp F    &kp P    &kp B    			&kp J &kp L  &kp U    &td_ysemi   &kp SEMI
+		&kp A         &kp R      &kp S    &kp T    &kp G 			&kp M &kp N  &kp E    &td_io   &kp O
+		&mt LSHIFT Z  &kp X      &kp C    &kp D    &kp V			&kp K &kp H  &kp COMMA &mt SLASH DOT &kp SLASH
+          				          &td_sftcaps &kp SPACE  	        &kp BSPC &to NAV 
+		>;
+		};
+
+       		nav_layer {
+		bindings = <
+		&kp LS(LC(T))        &kp LC(W)     &kp LC(T)   &kp TAB     &kp LA(TAB)	        &kp LC(A)      &kp LC(V)    &kp LC(C)   &kp LC(X)   &to ETC 
+		&kp LWIN      &kp LALT   &kp LCTRL &kp LSHIFT  &kp CAPS                 &caps_word     &kp LEFT     &kp UP      &kp DOWN    &kp RIGHT 
+		&kp LC(L)        &kp LC(PG_UP) &kp LC(PG_DN)    &kp DEL     &trans   	        &kp INSERT     &kp HOME     &kp PG_DN   &kp PG_UP   &kp END 
+					           &kp RET     &to DEFAULT	        &kp LC(BSPC)   &to NUM 
+		>;
+		};
+		
+		etc_layer {
+		bindings = <
+		&trans     &trans      &trans      &kp PIPE      &to SYS   	 	&kp CARET  &kp AMPS &kp KP_MULTIPLY &kp LPAR &kp RPAR 
+		&kp HASH      &kp QMARK  &kp FSLH  &kp COLON  &kp SEMI 			&kp TILDE &kp APOS  &kp LBRC  &kp RBRC   &kp BSPC
+		&trans    &kp KP_PLUS &kp LBKT &kp RBKT   &kp BSLH    	                &kp UNDER &kp LEFT &kp DOWN &kp UP  &kp RIGHT
+					           &kp SPACE &to DEFAULT  		&kp BSPC  &to NUM
+		>;
+		};	
+		
+		num_layer {
+		bindings = <
+		&kp TILDE  &kp SQT    &kp DQT    &kp KP_NUM    &kp EQUAL	        &kp PLUS &kp DOT   &kp STAR   &kp MINUS  &kp FSLH
+		&kp CARET &kp AMPS &kp STAR &kp LPAR &kp RPAR  				&kp N6    &kp N7     &kp N8     &kp N9    &kp N0 
+		&kp EXCL  &kp AT &kp HASH &kp DOLLAR &kp PERCENT   			&kp N1 	  &kp N2     &kp N3     &kp N4    &kp N5   
+					 &kp QMARK   &to DEFAULT  			&kp BSPC  &to NAV
+		>;
+		};	
+        
+		sys_layer {
+		bindings = <
+		&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2    &trans    &trans	&trans &trans   &trans   &trans  &bt BT_CLR
+		&trans &trans &mkp LCLK &mkp RCLK &trans  				&trans &trans   &trans   &trans  &trans
+	        &trans &mmv MOVE_UP &mmv MOVE_LEFT &mmv MOVE_RIGHT &mmv MOVE_DOWN      &trans &trans   &trans   &trans  &trans   
+					 &trans   &to DEFAULT  			&kp BSPC &to ETC
+		>;
+		};		
+	
+	};
+};
