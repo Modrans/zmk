@@ -12,8 +12,8 @@
 #define DEFAULT 0
 #define NAV     1
 #define ETC     2
-#define NUM     3
-#define SYS     4
+#define NUM		3
+#define SYS		4
 #define MOUSE   5
 
 &mt {
@@ -21,22 +21,21 @@
     tapping_term_ms = <200>;
 };
 
-/ { 
     combos {
-         compatible = "zmk,combos";
-         combo_esc {
-             timeout-ms = <50>;
-             key-positions = <0 1>;
-             bindings = <&to MOUSE>;
-         };
-        
+        compatible = "zmk,combos";
+        combo_esc {
+            timeout-ms = <50>;
+            key-positions = <0 1>;
+            bindings = <&to MOUSE>;
+        };
+       
          combo_tab {
-             timeout-ms = <50>;
-             key-positions = <10 11>;
-             bindings = <&kp TAB>;
-         };
+            timeout-ms = <50>;
+            key-positions = <10 11>;
+            bindings = <&kp TAB>;
+        };
     };
-	
+
 	behaviors {
         td_qesc: tap_dance_q_esc {
             compatible = "zmk,behavior-tap-dance";
@@ -46,7 +45,7 @@
             bindings = <&kp Q>, <&kp ESC>;
         };
 	
-	td_ysemi: tap_dance_y_semi {
+		td_ysemi: tap_dance_y_semi {
             compatible = "zmk,behavior-tap-dance";
             label = "TAP_DANCE_Y_SEMI";
             #binding-cells = <0>;
@@ -54,7 +53,7 @@
             bindings = <&kp Y>, <&kp SEMI>;
         };
 	
-	td_io: tap_dance_i_o {
+		td_io: tap_dance_i_o {
             compatible = "zmk,behavior-tap-dance";
             label = "TAP_DANCE_I_O";
             #binding-cells = <0>;
@@ -62,20 +61,20 @@
             bindings = <&kp I>, <&kp O>;
         };
 	
-	td_sftcaps: tap_dance_shift_capsword {
+		td_sftcaps: tap_dance_shift_capsword {
             compatible = "zmk,behavior-tap-dance";
             label = "TAP_DANCE_SHIFT_CAPSWORD";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
             bindings = <&sk LSHIFT>, <&caps_word>;
         };
-     };
+    };
 	
 	
-        keymap {
-                compatible = "zmk,keymap";
+    keymap {
+        compatible = "zmk,keymap";
                 
-       		default_layer {
+       	default_layer {
 		bindings = <
 		&td_qesc      &kp W      &kp F    &kp P    &kp B    			&kp J &kp L  &kp U    &td_ysemi   &kp SEMI
 		&kp A         &kp R      &kp S    &kp T    &kp G 			&kp M &kp N  &kp E    &td_io   &kp O
@@ -84,7 +83,7 @@
 		>;
 		};
 
-       		nav_layer {
+       	nav_layer {
 		bindings = <
 		&kp LS(LC(T))        &kp LC(W)     &kp LC(T)   &kp TAB     &kp LA(TAB)	        &kp LC(A)      &kp LC(V)    &kp LC(C)   &kp LC(X)   &to ETC 
 		&kp LWIN      &kp LALT   &kp LCTRL &kp LSHIFT  &kp CAPS                 &caps_word     &kp LEFT     &kp UP      &kp DOWN    &kp RIGHT 
@@ -122,11 +121,10 @@
 
 		mouse_layer {
 		bindings = <
-		&trans  &trans &kp BSPC  &kp DEL    &trans	&trans &trans   &trans   &trans  &trans
+		&trans  &trans  &kp BSPC  &kp DEL   &trans	&trans &trans   &trans   &trans  &trans
 		&trans &trans &mkp LCLK &mkp RCLK &trans  				&trans &trans   &trans   &trans  &trans
 	        &trans &mmv MOVE_UP &mmv MOVE_LEFT &mmv MOVE_RIGHT &mmv MOVE_DOWN      &trans &trans   &trans   &trans  &trans   
 					 &trans   &to DEFAULT  			&kp BSPC &to ETC
 		>;
 		};
 	};
-};
